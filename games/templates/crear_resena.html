@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PixelCritic - Editor de Reseña</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Forms & Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed": "#000767",
+            "surface-container-low": "#181c22",
+            "outline": "#908fa0",
+            "secondary-fixed-dim": "#bdc2ff",
+            "tertiary-container": "#00885d",
+            "on-secondary": "#131e8c",
+            "on-surface-variant": "#c7c4d7",
+            "error": "#ffb4ab",
+            "secondary": "#bdc2ff",
+            "on-primary-fixed-variant": "#2f2ebe",
+            "surface-dim": "#10141a",
+            "tertiary": "#4edea3",
+            "background": "#10141a",
+            "on-surface": "#dfe2eb",
+            "on-primary": "#1000a9",
+            "on-secondary-container": "#a8afff",
+            "tertiary-fixed": "#6ffbbe",
+            "outline-variant": "#464554",
+            "on-background": "#dfe2eb",
+            "primary": "#c0c1ff",
+            "surface-container": "#1c2026",
+            "inverse-primary": "#494bd6",
+            "primary-fixed-dim": "#c0c1ff",
+            "on-error-container": "#ffdad6",
+            "on-tertiary-fixed": "#002113",
+            "primary-container": "#8083ff",
+            "on-tertiary-container": "#000703",
+            "surface": "#10141a",
+            "surface-container-lowest": "#0a0e14",
+            "surface-container-high": "#262a31",
+            "inverse-on-surface": "#2d3137",
+            "surface-bright": "#353940",
+            "on-primary-container": "#0d0096",
+            "primary-fixed": "#e1e0ff",
+            "on-tertiary": "#003824",
+            "surface-tint": "#c0c1ff",
+            "error-container": "#93000a",
+            "inverse-surface": "#dfe2eb",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-secondary-fixed-variant": "#2f3aa3",
+            "surface-variant": "#31353c",
+            "on-primary-fixed": "#07006c",
+            "on-error": "#690005",
+            "surface-container-highest": "#31353c",
+            "secondary-container": "#2f3aa3",
+            "on-tertiary-fixed-variant": "#005236",
+            "secondary-fixed": "#e0e0ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1rem",
+            "space-sm": "0.5rem",
+            "space-md": "0.75rem",
+            "margin": "1rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-score-lg": ["JetBrains Mono"],
+            "headline-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-md": ["Inter"],
+            "label-lg": ["Inter"],
+            "label-score": ["JetBrains Mono"],
+            "label-md": ["Inter"]
+          },
+          "fontSize": {
+            "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-score-lg": ["24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "label-score": ["15px", { "lineHeight": "18px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 22px;
+      width: 22px;
+      border-radius: 9999px;
+      background: #8083ff;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(128, 131, 255, 0.65);
+      border: 2px solid #e1e0ff;
+      margin-top: -8px;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #262a31;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen relative selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Shared Component from JSON) -->
+<header class="bg-surface-container-low dark:bg-surface-container-low border-b border-outline-variant/30 dark:border-outline-variant/30 shadow-sm docked full-width top-0 z-30 sticky">
+<div class="flex justify-between items-center w-full px-8 py-3 max-w-7xl mx-auto">
+<div class="flex items-center gap-8">
+<a class="text-headline-md font-headline-md font-extrabold text-primary dark:text-primary tracking-tight" href="#">PixelCritic</a>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-primary dark:hover:text-primary" href="#">Catálogo</a>
+<a class="border-b-2 border-primary text-primary dark:text-primary pb-1 font-label-lg text-label-lg active:scale-95 transition-transform duration-150" href="#">Mis Reseñas</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-primary dark:hover:text-primary" href="#">Panel Admin</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<!-- Search bar on right -->
+<div class="relative hidden sm:block w-64">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-outline">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</span>
+<input class="w-full bg-surface-container rounded-lg pl-9 pr-3 py-1.5 text-body-sm font-body-sm text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Buscar videojuegos..." type="text"/>
+</div>
+<!-- Trailing actions from JSON -->
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-lg hover:bg-surface-container" title="Notificaciones">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-lg hover:bg-surface-container" title="Guardados">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+</button>
+<div class="w-8 h-8 rounded-full border border-primary/40 overflow-hidden ml-1 ring-1 ring-primary-container/20">
+<img alt="Avatar de usuario de PixelCritic" class="w-full h-full object-cover" data-alt="A futuristic gamer profile avatar illustration portraying a sharp cybernetic portrait bathed in deep violet and indigo ambient rim lighting on a dark metallic backdrop with crisp high contrast aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWOOM5l5wPEy-N0VUOXj7XRYPjkjHCMuXtuVF4_IiXjOkIiWwRLR0wa6dj_c_KMS8rL85XxdByONsAnm6iS4IgHdNjtnoJ9AVOzYN47keTJxuLl0M2R_8FK69qaGpI2MeFLCS4odtF99v0J9BeCY1TUJTwPaCTXQTZeZyu6JNYhnupsAc0Sf9BRSn81O0MYwOjKFywwvk4nTtHhaL9b057xIXwD01i54N8APv_hzEjVIck1aKaEcHx"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Fondo Simulado del Catálogo con Efecto Blur y Dimming -->
+<main class="relative px-6 py-8 max-w-7xl mx-auto opacity-20 blur-sm pointer-events-none select-none min-h-[85vh]">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container p-5 rounded-xl border border-outline-variant/20 h-72"></div>
+<div class="bg-surface-container p-5 rounded-xl border border-outline-variant/20 h-72"></div>
+<div class="bg-surface-container p-5 rounded-xl border border-outline-variant/20 h-72"></div>
+</div>
+</main>
+<!-- Modal Backdrop Overlay -->
+<div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-md z-40 flex items-center justify-center p-4 md:p-8 overflow-y-auto">
+<!-- Modal Card Container (Angular Material Dark Gaming Surface) -->
+<section class="bg-surface-container border border-outline-variant/40 rounded-xl shadow-2xl w-full max-w-3xl my-auto overflow-hidden relative transition-all duration-200">
+<!-- Top Subtle Indicator Line -->
+<div class="h-1 w-full bg-gradient-to-r from-primary-container via-primary to-secondary-fixed-dim"></div>
+
+<form method="post">
+    {% csrf_token %}
+    {% if form.errors %}
+    <div class="m-4 rounded-lg border border-red-500 bg-red-500/10 p-4 text-red-300">
+        <p>Revisa los siguientes errores:</p>
+        {{ form.errors }}
+    </div>
+{% endif %}
+<!-- Header de formulario -->
+<header class="px-6 py-5 bg-surface-container-high/60 border-b border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest border border-outline-variant/50 flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[22px]" data-icon="rate_review">rate_review</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-body-sm font-body-sm text-on-surface-variant uppercase tracking-wider font-semibold">Reseña Crítica</span>
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="text-body-sm font-body-sm text-tertiary">Modo Edición</span>
+</div>
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface tracking-tight">Editar Reseña de  {{ juego.titulo }}</h1>
+</div>
+</div>
+<button type="button" class="..." aria-label="Cerrar">
+    <span class="material-symbols-outlined">close</span>
+</button>
+</header>
+<!-- Cuerpo del Formulario CRUD -->
+<div class="p-6 md:p-8 space-y-7 max-h-[75vh] overflow-y-auto">
+<!-- Fila: Puntuación General y Estado -->
+<div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/30 space-y-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<label class="text-label-lg font-label-lg text-on-surface font-semibold flex items-center gap-2">
+                Puntuación General
+                <span class="text-outline text-body-sm font-body-sm font-normal">(Escala 1 a 10)</span>
+</label>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Calificación ponderada global para el videojuego</p>
+</div>
+<!-- Score Badge Dinámico -->
+<div class="flex items-center gap-3 self-start sm:self-auto">
+<div class="w-24 h-14 rounded-xl bg-tertiary-container/20 border-2 border-tertiary flex flex-col items-center justify-center shadow-lg shadow-tertiary/10">
+<span class="text-label-score-lg font-label-score-lg text-tertiary leading-none" id="scoreValueDisplay">3</span>
+<span  id="scoreCategory" class="text-[9px] font-label-md text-tertiary/80 uppercase font-bold tracking-widest mt-0.5"></span>
+</div>
+</div>
+</div>
+<!-- Slider de puntuación interactivo -->
+<div class="space-y-2 pt-1">
+<div class="space-y-2 pt-1">
+{{ form.calificacion }}
+
+<div class="flex justify-between text-body-sm text-outline px-1">
+    <span>1 (Deficiente)</span>
+    <span>3 (Aceptable)</span>
+    <span>5 (Excelente)</span>
+</div>
+
+{{ form.calificacion.errors }}
+</div>
+</div>
+<!-- Desglose de Puntuaciones Opcional -->
+
+</div>
+
+<!-- Área de texto: Análisis Detallado con Contador -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<label class="text-label-lg font-label-lg text-on-surface font-semibold flex items-center gap-2" for="reviewContent">
+<span class="material-symbols-outlined text-[18px] text-outline">article</span>
+              Análisis Crítico Detallado
+            </label>
+<span class="text-body-sm font-body-sm text-outline font-mono" id="charCounter">348 / 2,500 caracteres</span>
+</div>
+<div class="relative">
+{{ form.contenido }}
+
+{{ form.contenido.errors }}
+</div>
+</div>
+<!-- Tags rápidos para Pros y Contras -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
+<!-- Pros Tags -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-tertiary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+                Puntos Fuertes (Pros)
+              </span>
+<span class="text-body-sm font-body-sm text-outline">3 añadidos</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-tertiary-container/20 border border-tertiary/40 rounded-full text-body-sm font-body-sm text-tertiary">
+                Narrativa inmersiva
+                <button class="hover:text-white transition-colors"><span class="material-symbols-outlined text-[14px]">cancel</span></button>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-tertiary-container/20 border border-tertiary/40 rounded-full text-body-sm font-body-sm text-tertiary">
+                Árbol de talentos 2.0
+                <button class="hover:text-white transition-colors"><span class="material-symbols-outlined text-[14px]">cancel</span></button>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-tertiary-container/20 border border-tertiary/40 rounded-full text-body-sm font-body-sm text-tertiary">
+                Dirección de arte
+                <button class="hover:text-white transition-colors"><span class="material-symbols-outlined text-[14px]">cancel</span></button>
+</span>
+</div>
+<div class="flex items-center gap-2 pt-1">
+<input class="flex-1 bg-surface-container text-body-sm font-body-sm text-on-surface rounded-lg border border-outline-variant/40 px-3 py-1.5 focus:outline-none focus:border-tertiary" placeholder="Añadir punto positivo..." type="text"/>
+<button class="px-3 py-1.5 bg-surface-container-high text-tertiary hover:bg-tertiary hover:text-on-tertiary transition-colors text-body-sm font-body-sm font-semibold rounded-lg flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+<!-- Contras Tags -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-error font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">remove_circle</span>
+                Puntos Débiles (Contras)
+              </span>
+<span class="text-body-sm font-body-sm text-outline">2 añadidos</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-error-container/20 border border-error/40 rounded-full text-body-sm font-body-sm text-error">
+                Caídas leves de fps en Dogtown
+                <button class="hover:text-white transition-colors"><span class="material-symbols-outlined text-[14px]">cancel</span></button>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-error-container/20 border border-error/40 rounded-full text-body-sm font-body-sm text-error">
+                Misiones secundarias breves
+                <button class="hover:text-white transition-colors"><span class="material-symbols-outlined text-[14px]">cancel</span></button>
+</span>
+</div>
+<div class="flex items-center gap-2 pt-1">
+<input class="flex-1 bg-surface-container text-body-sm font-body-sm text-on-surface rounded-lg border border-outline-variant/40 px-3 py-1.5 focus:outline-none focus:border-error" placeholder="Añadir punto negativo..." type="text"/>
+<button class="px-3 py-1.5 bg-surface-container-high text-error hover:bg-error hover:text-on-error transition-colors text-body-sm font-body-sm font-semibold rounded-lg flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pie de Formulario: Botones de Acción CRUD -->
+<footer class="px-6 py-4 bg-surface-container-high/80 border-t border-outline-variant/30 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+<!-- Botón Destructivo CRUD Outlined -->
+<button class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-error/40 text-error hover:bg-error-container/20 active:scale-95 transition-all text-label-lg font-label-lg font-semibold flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">delete_forever</span>
+          Eliminar Reseña
+        </button>
+<!-- Botones Secundarios y Primarios -->
+<div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+<button class="flex-1 sm:flex-initial px-4 py-2.5 rounded-lg border border-outline-variant/50 text-on-surface hover:bg-surface-container-highest active:scale-95 transition-all text-label-lg font-label-lg font-semibold flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]">save</span>
+            Guardar Borrador
+          </button>
+<button type="submit"
+  class="flex-1 sm:flex-initial px-5 py-2.5 rounded-lg bg-primary-container text-on-primary-container font-bold flex items-center justify-center gap-2">
+    <span class="material-symbols-outlined">publish</span>
+    Publicar Reseña
+</button>
+</div>
+</footer>
+</form>
+</section>
+</div>
+<!-- Footer (Shared Component from JSON) -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/20 dark:border-outline-variant/20 full-width bottom relative z-10">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-6 max-w-7xl mx-auto gap-4">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-on-surface">PixelCritic</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">© 2024 PixelCritic. Todos los derechos reservados.</p>
+<div class="flex flex-wrap gap-4 text-center">
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md transition-colors hover:text-primary dark:hover:text-primary" href="#">Términos y Privacidad</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md transition-colors hover:text-primary dark:hover:text-primary" href="#">Pautas Editoriales</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md transition-colors hover:text-primary dark:hover:text-primary" href="#">Metodología de Puntuación</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md transition-colors hover:text-primary dark:hover:text-primary" href="#">Contacto</a>
+</div>
+</div>
+</footer>
+<!-- Micro-interacción ligera para el Slider de Calificación y Contador -->
+<script>
+    
+    const scoreRange = document.getElementById("scoreRange");
+    const scoreValueDisplay = document.getElementById("scoreValueDisplay");
+    const reviewContent = document.getElementById("reviewContent");
+    const charCounter = document.getElementById("charCounter");
+
+    function updateScore() {
+    if (scoreRange && scoreValueDisplay) {
+        const score = Number(scoreRange.value);
+
+        // Keep the numeric score unchanged
+        scoreValueDisplay.textContent = score.toFixed(1);
+
+        // Change the existing category text
+        const category = document.getElementById("scoreCategory");
+
+        if (category) {
+            if (score <= 2) {
+                category.textContent = "Deficiente";
+            } else if (score <= 3) {
+                category.textContent = "Aceptable";
+            } else if (score <= 4) {
+                category.textContent = "Bueno";
+            } else {
+                category.textContent = "Sobresaliente";
+            }
+        }
+    }
+}
+    function updateCharCounter() {
+        if (reviewContent && charCounter) {
+            charCounter.textContent =
+                `${reviewContent.value.length} / 2,500 caracteres`;
+        }
+    }
+
+    if (scoreRange) {
+        scoreRange.addEventListener("input", updateScore);
+        updateScore();
+    }
+
+    if (reviewContent) {
+        reviewContent.addEventListener("input", updateCharCounter);
+        updateCharCounter();
+    }
+  </script>
+</body></html>
