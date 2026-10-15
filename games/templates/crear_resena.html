@@ -205,12 +205,14 @@
 <span class="inline-block w-1.5 h-1.5 rounded-full bg-tertiary"></span>
 <span class="text-body-sm font-body-sm text-tertiary">Modo Edición</span>
 </div>
-<h1 class="text-headline-md font-headline-md font-bold text-on-surface tracking-tight">Editar Reseña de  {{ juego.titulo }}</h1>
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface tracking-tight">Reseña de  {{ juego.titulo }}</h1>
 </div>
 </div>
-<button type="button" class="..." aria-label="Cerrar">
+<a href="{% url 'detalle_juego' juego_id=juego.id %}"
+   class="..."
+   aria-label="Cerrar">
     <span class="material-symbols-outlined">close</span>
-</button>
+</a>
 </header>
 <!-- Cuerpo del Formulario CRUD -->
 <div class="p-6 md:p-8 space-y-7 max-h-[75vh] overflow-y-auto">
@@ -265,66 +267,8 @@
 {{ form.contenido.errors }}
 </div>
 </div>
-<!-- Tags rápidos para Pros y Contras -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
-<!-- Pros Tags -->
-<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 space-y-3">
-<div class="flex items-center justify-between">
-<span class="text-label-md font-label-md text-tertiary font-bold flex items-center gap-1">
-<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">add_circle</span>
-                Puntos Fuertes (Pros)
-              </span>
-<span class="text-body-sm font-body-sm text-outline">3 añadidos</span>
-</div>
-<div class="flex flex-wrap gap-2">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-tertiary-container/20 border border-tertiary/40 rounded-full text-body-sm font-body-sm text-tertiary">
-                Narrativa inmersiva
-                <button class="hover:text-white transition-colors"><span class="material-symbols-outlined text-[14px]">cancel</span></button>
-</span>
-<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-tertiary-container/20 border border-tertiary/40 rounded-full text-body-sm font-body-sm text-tertiary">
-                Árbol de talentos 2.0
-                <button class="hover:text-white transition-colors"><span class="material-symbols-outlined text-[14px]">cancel</span></button>
-</span>
-<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-tertiary-container/20 border border-tertiary/40 rounded-full text-body-sm font-body-sm text-tertiary">
-                Dirección de arte
-                <button class="hover:text-white transition-colors"><span class="material-symbols-outlined text-[14px]">cancel</span></button>
-</span>
-</div>
-<div class="flex items-center gap-2 pt-1">
-<input class="flex-1 bg-surface-container text-body-sm font-body-sm text-on-surface rounded-lg border border-outline-variant/40 px-3 py-1.5 focus:outline-none focus:border-tertiary" placeholder="Añadir punto positivo..." type="text"/>
-<button class="px-3 py-1.5 bg-surface-container-high text-tertiary hover:bg-tertiary hover:text-on-tertiary transition-colors text-body-sm font-body-sm font-semibold rounded-lg flex items-center gap-1" type="button">
-<span class="material-symbols-outlined text-[16px]">add</span>
-</button>
-</div>
-</div>
-<!-- Contras Tags -->
-<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 space-y-3">
-<div class="flex items-center justify-between">
-<span class="text-label-md font-label-md text-error font-bold flex items-center gap-1">
-<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">remove_circle</span>
-                Puntos Débiles (Contras)
-              </span>
-<span class="text-body-sm font-body-sm text-outline">2 añadidos</span>
-</div>
-<div class="flex flex-wrap gap-2">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-error-container/20 border border-error/40 rounded-full text-body-sm font-body-sm text-error">
-                Caídas leves de fps en Dogtown
-                <button class="hover:text-white transition-colors"><span class="material-symbols-outlined text-[14px]">cancel</span></button>
-</span>
-<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-error-container/20 border border-error/40 rounded-full text-body-sm font-body-sm text-error">
-                Misiones secundarias breves
-                <button class="hover:text-white transition-colors"><span class="material-symbols-outlined text-[14px]">cancel</span></button>
-</span>
-</div>
-<div class="flex items-center gap-2 pt-1">
-<input class="flex-1 bg-surface-container text-body-sm font-body-sm text-on-surface rounded-lg border border-outline-variant/40 px-3 py-1.5 focus:outline-none focus:border-error" placeholder="Añadir punto negativo..." type="text"/>
-<button class="px-3 py-1.5 bg-surface-container-high text-error hover:bg-error hover:text-on-error transition-colors text-body-sm font-body-sm font-semibold rounded-lg flex items-center gap-1" type="button">
-<span class="material-symbols-outlined text-[16px]">add</span>
-</button>
-</div>
-</div>
-</div>
-</div>
+
+
 <!-- Pie de Formulario: Botones de Acción CRUD -->
 <footer class="px-6 py-4 bg-surface-container-high/80 border-t border-outline-variant/30 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
 <!-- Botón Destructivo CRUD Outlined -->

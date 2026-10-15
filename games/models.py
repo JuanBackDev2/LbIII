@@ -46,6 +46,10 @@ class Resena(models.Model):
     class Meta:
         ordering = ["-fecha_creacion"]
         constraints = [
+            models.UniqueConstraint(
+                fields=["usuario", "juego"],
+                name="una_resena_por_usuario_juego"
+            ),
             models.CheckConstraint(
                 condition=models.Q(calificacion__isnull=True)
                 | models.Q(calificacion__gte=1, calificacion__lte=5),

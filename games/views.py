@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from rest_framework import generics, viewsets, permissions
 from rest_framework.exceptions import ValidationError
@@ -38,34 +39,6 @@ class LogoutAPIView(APIView):
         return Response({"detail": "Sesión cerrada correctamente."})
 
 
-class JuegoViewSet(viewsets.ModelViewSet):
-    queryset = Juego.objects.all()
-    serializer_class = JuegoSerializer
-    permission_classes = [EsAdministradorOConsulta]
-
-
-class ResenaViewSet(viewsets.ModelViewSet):
-    queryset = Resena.objects.select_related("usuario", "juego").all()
-    serializer_class = ResenaSerializer
-    permission_classes = [IsAuthenticated, EsAutorOConsulta]
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        juego_id = self.request.query_params.get("juego")
-        if juego_id:
-            queryset = queryset.filter(juego_id=juego_id)
-        # ?mias=true devuelve las reseñas del usuario autenticado.
-        if self.request.query_params.get("mias", "").lower() == "true":
-            queryset = queryset.filter(usuario=self.request.user)
-        return queryset
-
-    def perform_create(self, serializer):
-        # El usuario se toma del token; el cliente no puede suplantar al autor.
-        serializer.save(usuario=self.request.user)
-
-
-
-
 
 def detalle_juego(request, juego_id):
     juego = get_object_or_404(Juego, pk=juego_id)
@@ -77,12 +50,21 @@ def detalle_juego(request, juego_id):
         .order_by("-fecha_creacion")
     )
 
+    ya_reseno = (
+        request.user.is_authenticated
+        and Resena.objects.filter(
+            usuario=request.user,
+            juego=juego
+        ).exists()
+    )
+
     return render(
         request,
         "detalle_juego.html",
         {
             "juego": juego,
             "resenas": resenas,
+            "ya_reseno": ya_reseno,
         },
     )
 
@@ -90,6 +72,13 @@ def detalle_juego(request, juego_id):
 #@login_required
 def crear_resena(request, juego_id):
     juego = get_object_or_404(Juego, pk=juego_id)
+
+    if Resena.objects.filter(
+        usuario=request.user,
+        juego=juego
+    ).exists():
+        messages.error(request, "Ya has publicado una reseña para este juego.")
+        return redirect("detalle_juego", juego_id=juego.id)
 
     if request.method == "POST":
         form = ResenaForm(request.POST)
