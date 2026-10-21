@@ -50,13 +50,16 @@ def detalle_juego(request, juego_id):
         .order_by("-fecha_creacion")
     )
 
-    ya_reseno = (
-        request.user.is_authenticated
-        and Resena.objects.filter(
+    ya_reseno = False
+    mi_resena = None
+
+    if request.user.is_authenticated:
+        mi_resena = Resena.objects.filter(
             usuario=request.user,
             juego=juego
-        ).exists()
-    )
+        ).first()
+
+        ya_reseno = mi_resena is not None
 
     return render(
         request,
@@ -65,6 +68,7 @@ def detalle_juego(request, juego_id):
             "juego": juego,
             "resenas": resenas,
             "ya_reseno": ya_reseno,
+            "mi_resena": mi_resena,
         },
     )
 

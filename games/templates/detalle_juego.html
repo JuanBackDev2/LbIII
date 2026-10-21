@@ -234,31 +234,102 @@
               Publicada
             </span>
 </div>
-<!-- Estado y Resumen de la reseña del usuario logueado -->
-<div class="bg-surface-container-low rounded-lg p-4 border border-outline-variant/20 mb-5">
-<div class="flex items-center justify-between mb-3">
-<div class="flex items-center gap-2">
-<span class="font-label-score-lg text-label-score-lg text-tertiary">95</span>
-<span class="font-body-sm text-body-sm text-outline">/ 100</span>
-</div>
-<span class="font-body-sm text-body-sm text-outline">14 Oct 2023</span>
-</div>
-<p class="font-label-lg text-label-lg text-on-surface mb-1">"La redención definitiva de Night City"</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
-              Phantom Liberty no solo arregla y expande el universo de Cyberpunk, sino que ofrece una de las tramas de espionaje más maduras y tensas del medio...
+
+<!-- Estado y resumen de la reseña del usuario logueado -->
+{% if user.is_authenticated %}
+
+    {% if mi_resena %}
+
+        <div class="bg-surface-container-low rounded-lg p-4 border border-outline-variant/20 mb-5">
+
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                    <span class="font-label-score-lg text-label-score-lg text-tertiary">
+                        {% if mi_resena.calificacion %}
+                            {{ mi_resena.calificacion }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </span>
+
+                    <span class="font-body-sm text-body-sm text-outline">/ 5</span>
+                </div>
+
+                <span class="font-body-sm text-body-sm text-outline">
+                    {{ mi_resena.fecha_creacion|date:"d M Y" }}
+                </span>
+            </div>
+
+            <p class="font-label-lg text-label-lg text-on-surface mb-1">
+                Mi reseña de {{ juego.titulo }}
             </p>
-</div>
+
+            <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3 whitespace-pre-line">
+                {{ mi_resena.contenido }}
+            </p>
+
+        </div>
+
+        <!-- Acciones visuales pendientes de implementar -->
+        <div class="flex flex-col sm:flex-row gap-3">
+
+            <button
+                type="button"
+                disabled
+                title="Funcionalidad pendiente"
+                class="flex-1 bg-surface-container-high text-on-surface/50 border border-outline-variant/40 py-2.5 px-4 rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-2 cursor-not-allowed"
+            >
+                <span class="material-symbols-outlined text-lg">edit</span>
+                Editar reseña
+            </button>
+
+            <button
+                type="button"
+                disabled
+                title="Funcionalidad pendiente"
+                class="flex-1 bg-surface-container-low text-error/50 border border-error/40 py-2.5 px-4 rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-2 cursor-not-allowed"
+            >
+                <span class="material-symbols-outlined text-lg">delete</span>
+                Eliminar
+            </button>
+
+        </div>
+
+    {% else %}
+
+        <!-- El usuario todavía no ha escrito una reseña -->
+        <div class="bg-surface-container-low rounded-lg p-4 border border-outline-variant/20 mb-5">
+            <p class="font-label-lg text-label-lg text-on-surface mb-1">
+                Todavía no has escrito una reseña
+            </p>
+
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+                Comparte tu opinión sobre {{ juego.titulo }}.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'crear_resena' juego.id %}"
+            class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-primary text-on-primary"
+        >
+            <span class="material-symbols-outlined text-lg">rate_review</span>
+            Escribir reseña
+        </a>
+
+    {% endif %}
+
+{% else %}
+
+    <div class="bg-surface-container-low rounded-lg p-4 border border-outline-variant/20 mb-5">
+        <p class="font-label-lg text-label-lg text-on-surface mb-1">
+            Inicia sesión para escribir una reseña
+        </p>
+    </div>
+
+{% endif %}
+
 <!-- Acciones de gestión para el usuario -->
-<div class="flex flex-col sm:flex-row gap-3">
-<button class="flex-1 bg-surface-container-high hover:bg-surface-bright text-on-surface border border-outline-variant/40 py-2.5 px-4 rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-2 transition-all active:scale-95">
-<span class="material-symbols-outlined text-lg" data-icon="edit">edit</span>
-              Editar Reseña
-            </button>
-<button class="bg-surface-container-low hover:bg-error-container/20 text-error border border-error/40 py-2.5 px-4 rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-2 transition-all active:scale-95">
-<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
-              Eliminar
-            </button>
-</div>
+
 </div>
 
 </div>
