@@ -135,9 +135,84 @@
 <span class="material-symbols-outlined text-xl" data-icon="bookmark">bookmark</span>
 </button>
 <div class="h-6 w-px bg-outline-variant/30 mx-1"></div>
-<div class="flex items-center gap-3 pl-1 cursor-pointer">
-<img class="w-9 h-9 rounded-full object-cover ring-2 ring-primary/30" data-alt="A portrait shot of an authentic gaming editor user avatar wearing modern over-ear headphones, set in a cozy dark ambient lighting room with subtle indigo neon undertones, realistic photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrpO5qj3y4pX8-hcRjTP6QZL2aPxj2xoyFjScIX_vx_T8VrPXnP6WX7BndupgOFNADl8oQoD6InRyhq0175qsBJb4Aeio5O3SVY5f30cEPkNsoV6pGn9KolPvAejmkM2j768CtFSiLKdpotc16nKr8aW9A5sKgU4i377-PH4bk5fAT-CXv6Dw11D9_jbHbAp0y3guGkSv67apPg-f9paGYDLF8ucRr59BxmMNuPgd3OgjVb3sWJBSj"/>
-<span class="hidden lg:inline text-label-md font-label-md text-on-surface">Alex R.</span>
+<!-- Menú de perfil -->
+<div class="relative" id="profileMenu">
+  <button
+    type="button"
+    id="profileMenuButton"
+    aria-label="Abrir menú de usuario"
+    aria-expanded="false"
+    aria-controls="profileDropdown"
+    class="flex items-center gap-3 pl-1 rounded-lg p-1.5
+           hover:bg-surface-container-high transition-colors"
+  >
+    <img
+      class="w-9 h-9 rounded-full object-cover ring-2 ring-primary/30"
+      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrpO5qj3y4pX8-hcRjTP6QZL2aPxj2xoyFjScIX_vx_T8VrPXnP6WX7BndupgOFNADl8oQoD6InRyhq0175qsBJb4Aeio5O3SVY5f30cEPkNsoV6pGn9KolPvAejmkM2j768CtFSiLKdpotc16nKr8aW9A5sKgU4i377-PH4bk5fAT-CXv6Dw11D9_jbHbAp0y3guGkSv67apPg-f9paGYDLF8ucRr59BxmMNuPgd3OgjVb3sWJBSj"
+      alt="Avatar del usuario"
+    />
+    <span class="hidden lg:inline text-label-md font-label-md text-on-surface">
+      {{ request.user.username }}
+    </span>
+    <span class="material-symbols-outlined text-outline text-lg">
+      expand_more
+    </span>
+  </button>
+
+  <!-- Dropdown -->
+  <div
+    id="profileDropdown"
+    class="hidden absolute right-0 top-full mt-2 w-56
+           rounded-xl border border-outline-variant/40
+           bg-surface-container-low shadow-2xl z-[100]
+           overflow-hidden"
+  >
+    <div class="px-4 py-3 border-b border-outline-variant/20">
+      <p class="text-sm font-semibold text-on-surface">
+        {{ request.user.username }}
+      </p>
+      <p class="text-xs text-on-surface-variant truncate">
+        {{ request.user.email }}
+      </p>
+    </div>
+
+    <div class="p-1.5">
+      <a
+        href="#"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+               text-sm text-on-surface-variant
+               hover:bg-surface-container-high hover:text-primary"
+      >
+        <span class="material-symbols-outlined text-lg">person</span>
+        Mi perfil
+      </a>
+
+      <a
+        href="#"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+               text-sm text-on-surface-variant
+               hover:bg-surface-container-high hover:text-primary"
+      >
+        <span class="material-symbols-outlined text-lg">settings</span>
+        Configuración
+      </a>
+
+      <div class="my-1 border-t border-outline-variant/20"></div>
+
+      <form method="post" action="{% url 'cerrar_sesion' %}">
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="w-full flex items-center gap-3 px-3 py-2.5
+                 rounded-lg text-sm text-red-400
+                 hover:bg-red-500/10 transition-colors text-left"
+        >
+          <span class="material-symbols-outlined text-lg">logout</span>
+          Cerrar sesión
+        </button>
+      </form>
+    </div>
+  </div>
 </div>
 </div>
 </div>
@@ -160,7 +235,11 @@
 <!-- PORTADA VERTICAL 3:4 -->
 <div class="lg:col-span-3 flex justify-center lg:justify-start">
 <div class="w-56 lg:w-full aspect-[3/4] rounded-lg overflow-hidden border border-outline-variant/40 shadow-xl relative group">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Official video game cover art of a gritty high-tech futuristic metropolis with towering neon skyscrapers and a lone cybernetic operative in a dark leather trench coat, intense cinematic dark gamer aesthetic with deep indigo tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHY26giIYDgr6c4T8Pv1Zv_hgQQ5850o5ERPC58XgJds8vl2Drcy-ehHw4WWO13llJOClWybE2QW0D-I18JLlxe0oE_jCAMzGyFAvJ3i4cX0u2hjs2WJUyIs0wdqlF6B7x-VG489mCTHzNDPV-fDZTwgBvnpJX-lx21ZNam3Qb6oPQ7k0eSXykmBHFGOvQ4JJBj_mucSiTWXHxr3EQrPsTGz9Ri0bPw8sxnjQszM--Q6JGDTfFQli2"/>
+<img
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                src="{{ juego.caratula.url }}"
+                alt="Carátula de {{ juego.titulo }}"
+            >
 
 </div>
 </div>
@@ -202,7 +281,7 @@
 </div>
 <div>
 <p class="font-headline-sm font-headline-sm text-on-surface">Obra Maestra</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Basado en 2,418 análisis</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Basado en análisis general</p>
 </div>
 </div>
 <!-- 4 BARRAS DE PROGRESO DE DESGLOSE -->
@@ -231,7 +310,7 @@
               Tu Reseña
             </h2>
 <span class="px-2.5 py-0.5 rounded-full font-label-md text-label-md bg-tertiary/10 text-tertiary border border-tertiary/30">
-              Publicada
+              Público
             </span>
 </div>
 
@@ -439,4 +518,41 @@
 </nav>
 </div>
 </footer>
+
+
+<script>
+  const profileMenu = document.getElementById("profileMenu");
+  const profileButton = document.getElementById("profileMenuButton");
+  const profileDropdown = document.getElementById("profileDropdown");
+
+  if (profileMenu && profileButton && profileDropdown) {
+    function closeProfileMenu() {
+      profileDropdown.classList.add("hidden");
+      profileButton.setAttribute("aria-expanded", "false");
+    }
+
+    profileButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+
+      const isOpening = profileDropdown.classList.contains("hidden");
+
+      profileDropdown.classList.toggle("hidden");
+      profileButton.setAttribute("aria-expanded", String(isOpening));
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!profileMenu.contains(event.target)) {
+        closeProfileMenu();
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeProfileMenu();
+        profileButton.focus();
+      }
+    });
+  }
+</script>
+
 </body></html>

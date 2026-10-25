@@ -88,3 +88,10 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
 }
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+LOGIN_URL = "iniciar_sesion"
+LOGIN_REDIRECT_URL = "lista_juegos"
+LOGOUT_REDIRECT_URL = "iniciar_sesion"
