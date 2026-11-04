@@ -210,3 +210,13 @@ def crear_resena(request, juego_id):
         },
     )
 
+def catalogo(request):
+    juegos = Juego.objects.all().order_by("titulo")
+
+    return render(
+        request,
+        "catalogo.html",
+        {
+            "juegos": juegos,
+        }
+    )

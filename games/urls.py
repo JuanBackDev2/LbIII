@@ -1,7 +1,7 @@
 from django.urls import path
 
 from rest_framework.routers import DefaultRouter
-from .views import  detalle_juego,crear_resena, iniciar_sesion, cerrar_sesion, registrarse
+from .views import  detalle_juego,crear_resena, iniciar_sesion, cerrar_sesion, registrarse, catalogo
 
 router = DefaultRouter()
 #router.register("juegos", JuegoViewSet, basename="juego")
@@ -23,4 +23,5 @@ urlpatterns = [
     path("login/", iniciar_sesion, name="iniciar_sesion"),
     path("logout/", cerrar_sesion, name="cerrar_sesion"),
     path("registro/", registrarse, name="registrarse"),
+    path("catalogo/", catalogo, name="catalogo"),
 ]

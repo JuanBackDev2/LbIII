@@ -1,0 +1,1070 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+    <title>PixelCritic - Catálogo y Explorador de Videojuegos</title>
+
+    <!-- Fonts: Inter & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet"/>
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed": "#000767",
+                        "surface-container-low": "#181c22",
+                        "outline": "#908fa0",
+                        "secondary-fixed-dim": "#bdc2ff",
+                        "tertiary-container": "#00885d",
+                        "on-secondary": "#131e8c",
+                        "surface-dim": "#10141a",
+                        "tertiary": "#4edea3",
+                        "background": "#10141a",
+                        "on-surface": "#dfe2eb",
+                        "on-primary": "#1000a9",
+                        "on-secondary-container": "#a8afff",
+                        "tertiary-fixed": "#6ffbbe",
+                        "outline-variant": "#464554",
+                        "on-background": "#dfe2eb",
+                        "primary": "#c0c1ff",
+                        "surface-container": "#1c2026",
+                        "inverse-primary": "#494bd6",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#002113",
+                        "primary-container": "#8083ff",
+                        "on-tertiary-container": "#000703",
+                        "surface": "#10141a",
+                        "surface-container-lowest": "#0a0e14",
+                        "surface-container-high": "#262a31",
+                        "inverse-on-surface": "#2d3137",
+                        "surface-bright": "#353940",
+                        "on-primary-container": "#0d0096",
+                        "primary-fixed": "#e1e0ff",
+                        "on-tertiary": "#003824",
+                        "surface-tint": "#c0c1ff",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#dfe2eb",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-secondary-fixed-variant": "#2f3aa3",
+                        "surface-variant": "#31353c",
+                        "on-primary-fixed": "#07006c",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#31353c",
+                        "secondary-container": "#2f3aa3",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "secondary-fixed": "#e0e0ff",
+                        "secondary": "#bdc2ff",
+                        "on-surface-variant": "#c7c4d7"
+                    },
+
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+
+                    spacing: {
+                        "space-xl": "1.5rem",
+                        "space-xs": "0.25rem",
+                        "space-lg": "1rem",
+                        "space-sm": "0.5rem",
+                        "space-md": "0.75rem",
+                        "margin": "1rem",
+                        "gutter": "1rem"
+                    },
+
+                    fontFamily: {
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-score-lg": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "label-score": ["JetBrains Mono"],
+                        "label-md": ["Inter"]
+                    },
+
+                    fontSize: {
+                        "headline-lg": ["28px", {
+                            lineHeight: "34px",
+                            letterSpacing: "-0.02em",
+                            fontWeight: "700"
+                        }],
+                        "body-lg": ["16px", {
+                            lineHeight: "24px",
+                            fontWeight: "400"
+                        }],
+                        "label-score-lg": ["24px", {
+                            lineHeight: "28px",
+                            letterSpacing: "-0.03em",
+                            fontWeight: "800"
+                        }],
+                        "headline-sm": ["18px", {
+                            lineHeight: "24px",
+                            fontWeight: "600"
+                        }],
+                        "body-md": ["14px", {
+                            lineHeight: "20px",
+                            fontWeight: "400"
+                        }],
+                        "body-sm": ["12px", {
+                            lineHeight: "16px",
+                            fontWeight: "400"
+                        }],
+                        "headline-md": ["22px", {
+                            lineHeight: "28px",
+                            letterSpacing: "-0.01em",
+                            fontWeight: "600"
+                        }],
+                        "label-lg": ["14px", {
+                            lineHeight: "20px",
+                            letterSpacing: "0.01em",
+                            fontWeight: "600"
+                        }],
+                        "label-score": ["15px", {
+                            lineHeight: "18px",
+                            letterSpacing: "-0.02em",
+                            fontWeight: "700"
+                        }],
+                        "label-md": ["12px", {
+                            lineHeight: "16px",
+                            fontWeight: "500"
+                        }]
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 20;
+        }
+
+        .material-symbols-outlined.fill-icon {
+            font-variation-settings:
+                'FILL' 1,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 20;
+        }
+    </style>
+
+</head>
+
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+
+    <!-- ============================== -->
+    <!-- NAVIGATION BAR -->
+    <!-- ============================== -->
+
+    <header class="bg-surface-container-low border-b border-outline-variant/30 shadow-sm sticky z-50 top-0">
+
+        <div class="flex justify-between items-center w-full px-8 py-3 max-w-7xl mx-auto">
+
+            <!-- Logo and Navigation -->
+
+            <div class="flex items-center gap-8">
+
+                <a class="text-headline-md font-extrabold text-primary tracking-tight flex items-center gap-2"
+                   href="{% url 'catalogo' %}">
+
+                    <span class="material-symbols-outlined text-primary">
+                        sports_esports
+                    </span>
+
+                    PixelCritic
+
+                </a>
+
+                <nav class="hidden md:flex items-center gap-6">
+
+                    <a class="border-b-2 border-primary text-primary pb-1 font-label-lg text-label-lg"
+                       href="{% url 'catalogo' %}">
+                        Catálogo
+                    </a>
+
+                    <a class="text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-primary"
+                       href="#">
+                        Mis Reseñas
+                    </a>
+
+                    <a class="text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-primary"
+                       href="/admin/">
+                        Panel Admin
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <!-- Search and User Actions -->
+
+            <div class="flex items-center gap-4">
+
+                <div class="relative w-48 lg:w-80">
+
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-outline">
+
+                        <span class="material-symbols-outlined text-body-lg">
+                            search
+                        </span>
+
+                    </span>
+
+                    <input
+                        id="busqueda"
+                        class="w-full bg-surface-container border border-outline-variant/40 rounded-lg pl-10 pr-3 py-2 text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                        placeholder="Buscar videojuegos..."
+                        type="text"
+                    />
+
+                </div>
+
+
+                <!-- User -->
+
+                <!-- Menú de perfil -->
+<div class="relative" id="profileMenu">
+  <button
+    type="button"
+    id="profileMenuButton"
+    aria-label="Abrir menú de usuario"
+    aria-expanded="false"
+    aria-controls="profileDropdown"
+    class="flex items-center gap-3 pl-1 rounded-lg p-1.5
+           hover:bg-surface-container-high transition-colors"
+  >
+    <img
+      class="w-9 h-9 rounded-full object-cover ring-2 ring-primary/30"
+      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrpO5qj3y4pX8-hcRjTP6QZL2aPxj2xoyFjScIX_vx_T8VrPXnP6WX7BndupgOFNADl8oQoD6InRyhq0175qsBJb4Aeio5O3SVY5f30cEPkNsoV6pGn9KolPvAejmkM2j768CtFSiLKdpotc16nKr8aW9A5sKgU4i377-PH4bk5fAT-CXv6Dw11D9_jbHbAp0y3guGkSv67apPg-f9paGYDLF8ucRr59BxmMNuPgd3OgjVb3sWJBSj"
+      alt="Avatar del usuario"
+    />
+    <span class="hidden lg:inline text-label-md font-label-md text-on-surface">
+      {{ request.user.username }}
+    </span>
+    <span class="material-symbols-outlined text-outline text-lg">
+      expand_more
+    </span>
+  </button>
+
+  <!-- Dropdown -->
+  <div
+    id="profileDropdown"
+    class="hidden absolute right-0 top-full mt-2 w-56
+           rounded-xl border border-outline-variant/40
+           bg-surface-container-low shadow-2xl z-[100]
+           overflow-hidden"
+  >
+    <div class="px-4 py-3 border-b border-outline-variant/20">
+      <p class="text-sm font-semibold text-on-surface">
+        {{ request.user.username }}
+      </p>
+      <p class="text-xs text-on-surface-variant truncate">
+        {{ request.user.email }}
+      </p>
+    </div>
+
+    <div class="p-1.5">
+      <a
+        href="#"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+               text-sm text-on-surface-variant
+               hover:bg-surface-container-high hover:text-primary"
+      >
+        <span class="material-symbols-outlined text-lg">person</span>
+        Mi perfil
+      </a>
+
+      <a
+        href="#"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+               text-sm text-on-surface-variant
+               hover:bg-surface-container-high hover:text-primary"
+      >
+        <span class="material-symbols-outlined text-lg">settings</span>
+        Configuración
+      </a>
+
+      <div class="my-1 border-t border-outline-variant/20"></div>
+
+      <form method="post" action="{% url 'cerrar_sesion' %}">
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="w-full flex items-center gap-3 px-3 py-2.5
+                 rounded-lg text-sm text-red-400
+                 hover:bg-red-500/10 transition-colors text-left"
+        >
+          <span class="material-symbols-outlined text-lg">logout</span>
+          Cerrar sesión
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ============================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ============================== -->
+
+    <main class="flex-1 w-full max-w-7xl mx-auto px-8 py-6">
+
+
+        <!-- ============================== -->
+        <!-- HERO BANNER -->
+        <!-- ============================== -->
+
+        <section class="mb-8 rounded-xl bg-surface-container-low border border-outline-variant/30 overflow-hidden shadow-sm relative">
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 items-center">
+
+                <!-- Banner Image -->
+
+                <div class="lg:col-span-7 h-64 lg:h-80 relative overflow-hidden">
+
+                    <img
+                        class="w-full h-full object-cover object-center"
+                        alt="Paisaje cinematográfico de videojuegos"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuABUdaDSSbFuA7-f8XYOEgXdJqSIu6KaC7l_IykHqtKvgsQdML6U7CLGDxgwwXwL52UUMGnrPp_je-9DQFP2HxLPRhrf9I75h0bH7EROk0pLpIjI3hTRdoUmPtzRLBT0Qti684YZCxHBrf3QClOj2ja6G0XCxLHPiWJTG5yqgztQDh1c2mNu8zF3m9cS3BfV_ZoqG2Jkfk43EGu6ELO-NEwi5eailZE3gZSYO1ZPU0GoXbf6XiW-I4u"
+                    />
+
+                    <div class="absolute inset-0 bg-gradient-to-r from-surface-container-low via-surface-container-low/60 to-transparent"></div>
+
+                    <div class="absolute top-4 left-4">
+
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-md bg-surface-container-highest/90 text-primary border border-primary/30 backdrop-blur-sm">
+
+                            <span class="material-symbols-outlined text-body-sm fill-icon">
+                                stars
+                            </span>
+
+                            Explora el catálogo
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Banner Content -->
+
+                <div class="lg:col-span-5 p-6 lg:p-8 flex flex-col justify-center h-full">
+
+                    <div class="flex items-center justify-between gap-4 mb-3">
+
+                        <span class="text-body-sm text-on-surface-variant">
+                            PixelCritic • Videojuegos
+                        </span>
+
+                        <span class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-tertiary-container/30 border border-tertiary text-tertiary">
+
+                            <span class="material-symbols-outlined text-body-sm">
+                                verified
+                            </span>
+
+                            Catálogo
+
+                        </span>
+
+                    </div>
+
+                    <h1 class="text-headline-lg text-on-surface mb-3 tracking-tight">
+                        Descubre tu próximo videojuego favorito
+                    </h1>
+
+                    <p class="text-body-md text-on-surface-variant mb-6">
+                        Explora nuestro catálogo, conoce nuevos títulos y consulta las opiniones de otros jugadores.
+                    </p>
+
+                    <div class="flex items-center gap-3">
+
+                        <a href="#catalogo"
+                           class="flex-1 bg-primary text-on-primary font-label-lg py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-fixed-dim transition-colors shadow-sm">
+
+                            <span class="material-symbols-outlined text-body-lg">
+                                sports_esports
+                            </span>
+
+                            Explorar videojuegos
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================== -->
+        <!-- FILTERS AND SEARCH -->
+        <!-- ============================== -->
+
+        <div class="space-y-4 mb-6">
+
+            <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-xl bg-surface-container-low border border-outline-variant/30">
+
+
+                <!-- Platform Filters -->
+
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+
+                    <span class="text-label-md text-outline mr-2 uppercase tracking-wider hidden sm:inline">
+                        Plataformas:
+                    </span>
+
+
+                    <button
+                        type="button"
+                        data-plataforma=""
+                        class="filtro-plataforma px-3.5 py-1.5 rounded-lg text-label-md bg-secondary-container text-on-surface border border-primary transition-colors whitespace-nowrap">
+
+                        Todas
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        data-plataforma="PC"
+                        class="filtro-plataforma px-3.5 py-1.5 rounded-lg text-label-md bg-surface-container text-on-surface-variant border border-outline-variant/30 hover:text-on-surface transition-colors flex items-center gap-1.5 whitespace-nowrap">
+
+                        <span class="material-symbols-outlined text-body-sm">
+                            computer
+                        </span>
+
+                        PC
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        data-plataforma="PlayStation"
+                        class="filtro-plataforma px-3.5 py-1.5 rounded-lg text-label-md bg-surface-container text-on-surface-variant border border-outline-variant/30 hover:text-on-surface transition-colors flex items-center gap-1.5 whitespace-nowrap">
+
+                        <span class="material-symbols-outlined text-body-sm">
+                            videogame_asset
+                        </span>
+
+                        PlayStation
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        data-plataforma="Xbox"
+                        class="filtro-plataforma px-3.5 py-1.5 rounded-lg text-label-md bg-surface-container text-on-surface-variant border border-outline-variant/30 hover:text-on-surface transition-colors flex items-center gap-1.5 whitespace-nowrap">
+
+                        <span class="material-symbols-outlined text-body-sm">
+                            sports_esports
+                        </span>
+
+                        Xbox
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        data-plataforma="Nintendo"
+                        class="filtro-plataforma px-3.5 py-1.5 rounded-lg text-label-md bg-surface-container text-on-surface-variant border border-outline-variant/30 hover:text-on-surface transition-colors flex items-center gap-1.5 whitespace-nowrap">
+
+                        <span class="material-symbols-outlined text-body-sm">
+                            gamepad
+                        </span>
+
+                        Nintendo
+
+                    </button>
+
+                </div>
+
+
+                <!-- Sorting -->
+
+                <div class="flex items-center gap-2">
+
+                    <label class="text-label-md text-outline whitespace-nowrap" for="filter-sort">
+                        Ordenar:
+                    </label>
+
+                    <select
+                        id="filter-sort"
+                        class="bg-surface-container text-on-surface border border-outline-variant/30 rounded-lg text-body-sm py-1.5 pl-3 pr-8 focus:outline-none focus:border-primary">
+
+                        <option value="titulo">
+                            Orden alfabético
+                        </option>
+
+                        <option value="anio_desc">
+                            Más recientes
+                        </option>
+
+                        <option value="anio_asc">
+                            Más antiguos
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- Catalog Metrics -->
+
+            <div class="flex items-center justify-between px-1">
+
+                <p class="text-body-sm text-outline">
+
+                    Mostrando
+
+                    <span id="contadorJuegos" class="text-on-surface font-semibold">
+                        {{ juegos|length }}
+                    </span>
+
+                    de
+
+                    <span class="text-on-surface font-semibold">
+                        {{ total_juegos }}
+                    </span>
+
+                    videojuegos
+
+                </p>
+
+                <div class="flex items-center gap-2">
+
+                    <button
+                        class="p-1.5 rounded bg-surface-container-high text-primary border border-outline-variant/40"
+                        title="Vista en Cuadrícula">
+
+                        <span class="material-symbols-outlined text-body-lg">
+                            grid_view
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ============================== -->
+        <!-- DYNAMIC VIDEO GAME CATALOG -->
+        <!-- ============================== -->
+
+        <section id="catalogo" class="mb-10">
+
+            <div
+                id="catalogo-juegos"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+
+                {% for juego in juegos %}
+
+
+                    <!-- Individual Game Card -->
+
+                    <article
+                        class="juego-card group bg-surface-container-low rounded-xl border border-outline-variant/30 overflow-hidden hover:border-primary/50 transition-all duration-200 flex flex-col"
+                        data-titulo="{{ juego.titulo|lower }}"
+                        data-plataforma="{{ juego.plataforma }}"
+                        data-anio="{{ juego.anio_lanzamiento }}">
+
+
+                        <!-- Game Cover -->
+
+                        <div class="relative aspect-[16/10] overflow-hidden bg-surface-container-high">
+
+                            {% if juego.caratula %}
+
+                                <img
+                                    src="{{ juego.caratula.url }}"
+                                    alt="Carátula de {{ juego.titulo }}"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                />
+
+                            {% else %}
+
+                                <div class="w-full h-full flex flex-col items-center justify-center bg-surface-container-high">
+
+                                    <span class="material-symbols-outlined text-5xl text-outline">
+                                        sports_esports
+                                    </span>
+
+                                    <span class="text-body-sm text-outline mt-2">
+                                        Sin carátula
+                                    </span>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- Platform Badge -->
+
+                            <div class="absolute top-3 left-3">
+
+                                <span class="px-2.5 py-1 rounded bg-surface-container-lowest/90 text-primary text-body-sm font-semibold border border-outline-variant/30">
+
+                                    {{ juego.get_plataforma_display }}
+
+                                </span>
+
+                            </div>
+
+
+                            <!-- Release Year -->
+
+                            <div class="absolute bottom-3 right-3">
+
+                                <span class="px-2.5 py-1 rounded bg-surface-container-lowest/90 text-on-surface text-body-sm font-semibold border border-outline-variant/30">
+
+                                    {{ juego.anio_lanzamiento }}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Game Information -->
+
+                        <div class="p-4 flex-1">
+
+                            <span class="juego-anio text-body-sm text-outline block mb-1">
+
+                                {{ juego.anio_lanzamiento }}
+
+                            </span>
+
+
+                            <h2 class="text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-1 mb-2">
+
+                                {{ juego.titulo }}
+
+                            </h2>
+
+
+                            <p class="text-body-sm text-on-surface-variant line-clamp-2">
+
+                                {{ juego.descripcion|truncatewords:22 }}
+
+                            </p>
+
+                        </div>
+
+
+                        <!-- Card Actions -->
+
+                        <div class="px-4 pb-4 pt-0 flex items-center gap-2 border-t border-outline-variant/20 mt-2">
+
+
+                            <a
+                                href="{% url 'detalle_juego' juego.id %}"
+                                class="flex-1 bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md py-2 px-3 rounded-lg border border-outline-variant/30 transition-colors flex items-center justify-center gap-1">
+
+                                Ver Ficha
+
+                            </a>
+
+
+                            <a
+                                href="{% url 'crear_resena' juego.id %}"
+                                class="bg-primary/10 hover:bg-primary/20 text-primary font-label-md py-2 px-3 rounded-lg border border-primary/30 transition-colors flex items-center justify-center gap-1">
+
+                                <span class="material-symbols-outlined text-body-sm">
+                                    rate_review
+                                </span>
+
+                                Reseñar
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                {% empty %}
+
+
+                    <!-- Empty Catalog -->
+
+                    <div class="col-span-full rounded-xl bg-surface-container-low border border-outline-variant/30 p-12 text-center">
+
+                        <span class="material-symbols-outlined text-5xl text-outline">
+                            sports_esports
+                        </span>
+
+                        <h2 class="text-headline-md text-on-surface mt-4 mb-2">
+                            No hay videojuegos registrados
+                        </h2>
+
+                        <p class="text-body-sm text-on-surface-variant">
+                            Cuando agregues videojuegos a la base de datos, aparecerán automáticamente en este catálogo.
+                        </p>
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+            <!-- No Search Results -->
+
+            <div
+                id="sin-resultados"
+                class="hidden rounded-xl bg-surface-container-low border border-outline-variant/30 p-10 text-center mt-6">
+
+                <span class="material-symbols-outlined text-5xl text-outline">
+                    search_off
+                </span>
+
+                <h3 class="text-headline-sm text-on-surface mt-4 mb-2">
+                    No se encontraron videojuegos
+                </h3>
+
+                <p class="text-body-sm text-on-surface-variant">
+                    Intenta modificar el término de búsqueda o la plataforma seleccionada.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ============================== -->
+    <!-- FOOTER -->
+    <!-- ============================== -->
+
+    <footer class="bg-surface-container-lowest border-t border-outline-variant/20 mt-auto">
+
+        <div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-6 max-w-7xl mx-auto gap-4">
+
+            <div class="flex items-center gap-3">
+
+                <span class="text-headline-sm font-bold text-on-surface">
+                    PixelCritic
+                </span>
+
+                <span class="text-body-sm text-on-surface-variant">
+                    • Criterio editorial independiente
+                </span>
+
+            </div>
+
+
+            <nav class="flex flex-wrap items-center justify-center gap-6">
+
+                <a class="text-on-surface-variant font-label-md hover:text-primary transition-colors"
+                   href="#">
+                    Términos y Privacidad
+                </a>
+
+                <a class="text-on-surface-variant font-label-md hover:text-primary transition-colors"
+                   href="#">
+                    Pautas Editoriales
+                </a>
+
+                <a class="text-on-surface-variant font-label-md hover:text-primary transition-colors"
+                   href="#">
+                    Metodología de Puntuación
+                </a>
+
+                <a class="text-on-surface-variant font-label-md hover:text-primary transition-colors"
+                   href="#">
+                    Contacto
+                </a>
+
+            </nav>
+
+
+            <p class="text-body-sm text-outline">
+                © 2026 PixelCritic. Todos los derechos reservados.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ============================== -->
+    <!-- JAVASCRIPT: SEARCH, FILTERS AND SORT -->
+    <!-- ============================== -->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const busqueda = document.getElementById("busqueda");
+
+            const botonesPlataforma = document.querySelectorAll(".filtro-plataforma");
+
+            const selectorOrden = document.getElementById("filter-sort");
+
+            const catalogo = document.getElementById("catalogo-juegos");
+
+            const contador = document.getElementById("contadorJuegos");
+
+            const mensajeSinResultados = document.getElementById("sin-resultados");
+
+            let plataformaSeleccionada = "";
+
+
+            // Filter and sort games
+
+            function filtrarYOrdenar() {
+
+                const texto = busqueda.value.toLowerCase().trim();
+
+                const tarjetas = Array.from(
+                    catalogo.querySelectorAll(".juego-card")
+                );
+
+                let visibles = [];
+
+
+                tarjetas.forEach(function (tarjeta) {
+
+                    const titulo = tarjeta.dataset.titulo.toLowerCase();
+
+                    const plataforma = tarjeta.dataset.plataforma.toLowerCase();
+
+                    const coincideTexto = titulo.includes(texto);
+
+                    const coincidePlataforma =
+                        plataformaSeleccionada === "" ||
+                        plataforma === plataformaSeleccionada.toLowerCase();
+
+
+                    if (coincideTexto && coincidePlataforma) {
+
+                        tarjeta.classList.remove("hidden");
+
+                        visibles.push(tarjeta);
+
+                    } else {
+
+                        tarjeta.classList.add("hidden");
+
+                    }
+
+                });
+
+
+                // Sort visible games
+
+                const criterio = selectorOrden.value;
+
+                visibles.sort(function (a, b) {
+
+                    if (criterio === "titulo") {
+
+                        return a.dataset.titulo.localeCompare(b.dataset.titulo);
+
+                    }
+
+                    const anioA = parseInt(a.dataset.anio || "0");
+
+                    const anioB = parseInt(b.dataset.anio || "0");
+
+
+                    if (criterio === "anio_desc") {
+
+                        return anioB - anioA;
+
+                    }
+
+                    if (criterio === "anio_asc") {
+
+                        return anioA - anioB;
+
+                    }
+
+                    return 0;
+
+                });
+
+
+                // Reorder cards in the grid
+
+                visibles.forEach(function (tarjeta) {
+
+                    catalogo.appendChild(tarjeta);
+
+                });
+
+
+                // Update counter
+
+                contador.textContent = visibles.length;
+
+
+                // Show empty search message
+
+                mensajeSinResultados.classList.toggle(
+                    "hidden",
+                    visibles.length > 0 || tarjetas.length === 0
+                );
+
+            }
+
+
+            // Search by title
+
+            busqueda.addEventListener("input", filtrarYOrdenar);
+
+
+            // Platform filters
+
+            botonesPlataforma.forEach(function (boton) {
+
+                boton.addEventListener("click", function () {
+
+                    plataformaSeleccionada = this.dataset.plataforma;
+
+
+                    // Reset all buttons
+
+                    botonesPlataforma.forEach(function (btn) {
+
+                        btn.classList.remove(
+                            "bg-secondary-container",
+                            "text-on-surface",
+                            "border-primary"
+                        );
+
+                        btn.classList.add(
+                            "bg-surface-container",
+                            "text-on-surface-variant",
+                            "border-outline-variant/30"
+                        );
+
+                    });
+
+
+                    // Activate selected button
+
+                    this.classList.remove(
+                        "bg-surface-container",
+                        "text-on-surface-variant",
+                        "border-outline-variant/30"
+                    );
+
+                    this.classList.add(
+                        "bg-secondary-container",
+                        "text-on-surface",
+                        "border-primary"
+                    );
+
+
+                    filtrarYOrdenar();
+
+                });
+
+            });
+
+
+            // Sort selector
+
+            selectorOrden.addEventListener("change", filtrarYOrdenar);
+
+
+        });
+
+    </script>
+
+    <script>
+  const profileMenu = document.getElementById("profileMenu");
+  const profileButton = document.getElementById("profileMenuButton");
+  const profileDropdown = document.getElementById("profileDropdown");
+
+  if (profileMenu && profileButton && profileDropdown) {
+    function closeProfileMenu() {
+      profileDropdown.classList.add("hidden");
+      profileButton.setAttribute("aria-expanded", "false");
+    }
+
+    profileButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+
+      const isOpening = profileDropdown.classList.contains("hidden");
+
+      profileDropdown.classList.toggle("hidden");
+      profileButton.setAttribute("aria-expanded", String(isOpening));
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!profileMenu.contains(event.target)) {
+        closeProfileMenu();
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeProfileMenu();
+        profileButton.focus();
+      }
+    });
+  }
+</script>
+
+
+</body>
+
+</html>
+```
