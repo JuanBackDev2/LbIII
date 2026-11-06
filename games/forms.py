@@ -45,8 +45,13 @@ class ResenaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["calificacion"].required = False
-        self.fields["calificacion"].initial = 3
         self.fields["contenido"].required = True
+        
+        if self.instance and self.instance.pk:
+            self.fields["calificacion"].initial = self.instance.calificacion
+        else:
+            self.fields["calificacion"].initial = 3
+        
 
 
 

@@ -267,15 +267,30 @@
 {{ form.contenido.errors }}
 </div>
 </div>
-
+</form>
 
 <!-- Pie de Formulario: Botones de Acción CRUD -->
 <footer class="px-6 py-4 bg-surface-container-high/80 border-t border-outline-variant/30 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
 <!-- Botón Destructivo CRUD Outlined -->
-<button class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-error/40 text-error hover:bg-error-container/20 active:scale-95 transition-all text-label-lg font-label-lg font-semibold flex items-center justify-center gap-2" type="button">
-<span class="material-symbols-outlined text-[18px]">delete_forever</span>
-          Eliminar Reseña
-        </button>
+{% if modo_edicion %}
+<form
+    method="POST"
+    action="{% url 'eliminar_resena' resena.id %}"
+    onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta reseña? Esta acción no se puede deshacer.');"
+>
+    {% csrf_token %}
+
+    <button
+        class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-error/40 text-error hover:bg-error-container/20 active:scale-95 transition-all text-label-lg font-label-lg font-semibold flex items-center justify-center gap-2"
+        type="submit"
+    >
+        <span class="material-symbols-outlined text-[18px]">
+            delete_forever
+        </span>
+        Eliminar Reseña
+    </button>
+</form>
+{% endif %}
 <!-- Botones Secundarios y Primarios -->
 <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
 <button class="flex-1 sm:flex-initial px-4 py-2.5 rounded-lg border border-outline-variant/50 text-on-surface hover:bg-surface-container-highest active:scale-95 transition-all text-label-lg font-label-lg font-semibold flex items-center justify-center gap-1.5" type="button">
@@ -283,9 +298,17 @@
             Guardar Borrador
           </button>
 <button type="submit"
-  class="flex-1 sm:flex-initial px-5 py-2.5 rounded-lg bg-primary-container text-on-primary-container font-bold flex items-center justify-center gap-2">
-    <span class="material-symbols-outlined">publish</span>
-    Publicar Reseña
+    class="flex-1 sm:flex-initial px-5 py-2.5 rounded-lg bg-primary-container text-on-primary-container font-bold flex items-center justify-center gap-2">
+
+    <span class="material-symbols-outlined">
+        {% if modo_edicion %}save{% else %}publish{% endif %}
+    </span>
+
+    {% if modo_edicion %}
+        Guardar Cambios
+    {% else %}
+        Publicar Reseña
+    {% endif %}
 </button>
 </div>
 </footer>

@@ -220,3 +220,70 @@ def catalogo(request):
             "juegos": juegos,
         }
     )
+
+@login_required
+def editar_resena(request, resena_id):
+
+    resena = get_object_or_404(
+        Resena,
+        id=resena_id,
+        usuario=request.user
+    )
+
+    if request.method == "POST":
+        form = ResenaForm(
+            request.POST,
+            instance=resena
+        )
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(
+                request,
+                "Tu reseña se actualizó correctamente."
+            )
+
+            return redirect(
+                "detalle_juego",
+                juego_id=resena.juego.id
+            )
+
+    else:
+        form = ResenaForm(instance=resena)
+
+    return render(request, "crear_resena.html", {
+        "form": form,
+        "juego": resena.juego,
+        "resena": resena,
+        "modo_edicion": True
+    })
+
+@login_required
+def eliminar_resena(request, resena_id):
+
+    resena = get_object_or_404(
+        Resena,
+        id=resena_id,
+        usuario=request.user
+    )
+
+    juego_id = resena.juego.id
+
+    if request.method == "POST":
+        resena.delete()
+
+        messages.success(
+            request,
+            "Tu reseña se eliminó correctamente."
+        )
+
+        return redirect(
+            "detalle_juego",
+            juego_id=juego_id
+        )
+
+    return redirect(
+        "detalle_juego",
+        juego_id=juego_id
+    )
