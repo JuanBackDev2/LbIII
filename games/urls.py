@@ -1,7 +1,7 @@
 from django.urls import path
 
 from rest_framework.routers import DefaultRouter
-from .views import  detalle_juego,crear_resena, eliminar_resena, iniciar_sesion, cerrar_sesion, registrarse, catalogo, editar_resena
+from .views import  detalle_juego,crear_resena, eliminar_resena, iniciar_sesion, cerrar_sesion, mis_resenas, registrarse, catalogo, editar_resena
 
 router = DefaultRouter()
 #router.register("juegos", JuegoViewSet, basename="juego")
@@ -32,5 +32,6 @@ urlpatterns = [
     "resenas/<int:resena_id>/eliminar/",
     eliminar_resena,
     name="eliminar_resena"
-),
+    ),
+    path("mis-resenas/", mis_resenas, name="mis_resenas"),
 ]

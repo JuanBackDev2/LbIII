@@ -1,0 +1,533 @@
+<!DOCTYPE html><html class="dark" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PixelCritic - Mis Reseñas</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@700;800&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed": "#000767",
+            "inverse-surface": "#dfe2eb",
+            "background": "#10141a",
+            "on-background": "#dfe2eb",
+            "surface-variant": "#31353c",
+            "outline": "#908fa0",
+            "error-container": "#93000a",
+            "inverse-on-surface": "#2d3137",
+            "on-secondary-fixed-variant": "#2f3aa3",
+            "primary-container": "#8083ff",
+            "surface-container": "#1c2026",
+            "tertiary": "#4edea3",
+            "surface-container-lowest": "#0a0e14",
+            "on-secondary-container": "#a8afff",
+            "on-primary": "#1000a9",
+            "on-tertiary-fixed-variant": "#005236",
+            "primary-fixed": "#e1e0ff",
+            "secondary-fixed": "#e0e0ff",
+            "on-error-container": "#ffdad6",
+            "surface-bright": "#353940",
+            "surface": "#10141a",
+            "on-primary-fixed": "#07006c",
+            "error": "#ffb4ab",
+            "on-surface-variant": "#c7c4d7",
+            "on-primary-fixed-variant": "#2f2ebe",
+            "on-primary-container": "#0d0096",
+            "surface-container-highest": "#31353c",
+            "on-secondary": "#131e8c",
+            "surface-tint": "#c0c1ff",
+            "primary": "#c0c1ff",
+            "on-surface": "#dfe2eb",
+            "tertiary-container": "#00885d",
+            "on-error": "#690005",
+            "secondary-container": "#2f3aa3",
+            "inverse-primary": "#494bd6",
+            "surface-dim": "#10141a",
+            "surface-container-low": "#181c22",
+            "outline-variant": "#464554",
+            "secondary-fixed-dim": "#bdc2ff",
+            "secondary": "#bdc2ff",
+            "on-tertiary-fixed": "#002113",
+            "surface-container-high": "#262a31",
+            "tertiary-fixed": "#6ffbbe",
+            "primary-fixed-dim": "#c0c1ff",
+            "on-tertiary": "#003824",
+            "on-tertiary-container": "#000703",
+            "tertiary-fixed-dim": "#4edea3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "1.5rem",
+            "space-lg": "1rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "0.75rem",
+            "margin": "1rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "label-score-lg": ["JetBrains Mono"],
+            "body-lg": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-score": ["JetBrains Mono"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-md": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "label-score-lg": ["24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-score": ["15px", { "lineHeight": "18px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #181c22;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #31353c;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Bar (Shared Component: TopNavBar) -->
+<header class="bg-surface-container-low dark:bg-surface-container-low docked full-width top-0 border-b border-outline-variant/30 dark:border-outline-variant/30 shadow-sm sticky z-50">
+<div class="flex justify-between items-center w-full px-8 py-3 max-w-7xl mx-auto">
+<!-- Brand Logo & Main Links -->
+<div class="flex items-center gap-8">
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-8 h-8 rounded bg-primary-container/20 border border-primary/40 flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-150">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="sports_esports" style="font-variation-settings: 'FILL' 1;">sports_esports</span>
+</div>
+<span class="text-headline-md font-headline-md font-extrabold text-primary dark:text-primary tracking-tight">PixelCritic</span>
+</a>
+<!-- Desktop Navigation Links -->
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-primary dark:hover:text-primary duration-150 active:scale-95 transition-transform" href="{% url 'catalogo' %}">
+            Catálogo
+          </a>
+<!-- Active Tab: Mis Reseñas -->
+<a class="border-b-2 border-primary text-primary dark:text-primary pb-1 font-label-lg text-label-lg active:scale-95 transition-transform duration-150 flex items-center gap-1.5" href="#">
+            Mis Reseñas
+          </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-primary dark:hover:text-primary duration-150 active:scale-95 transition-transform" href="#">
+            Panel Admin
+          </a>
+</nav>
+</div>
+<!-- Right Controls: Search, Actions, Profile -->
+<div class="flex items-center gap-4">
+<!-- Search Bar -->
+<div class="relative hidden sm:block w-64 lg:w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg pointer-events-none" data-icon="search">search</span>
+<input class="w-full h-10 pl-9 pr-4 rounded bg-surface-container border border-outline-variant/30 text-on-surface placeholder:text-outline text-body-sm font-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Buscar en mis reseñas..." type="text">
+</div>
+<!-- Trailing Action Icons -->
+<div class="flex items-center gap-1">
+<button aria-label="Notificaciones" class="w-10 h-10 rounded flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors duration-150 active:scale-95 transition-transform duration-150" title="Notificaciones">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="Guardados" class="w-10 h-10 rounded flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors duration-150 active:scale-95 transition-transform duration-150" title="Guardados">
+<span class="material-symbols-outlined text-xl" data-icon="bookmark">bookmark</span>
+</button>
+</div>
+<div class="h-6 w-px bg-outline-variant/30 hidden sm:block"></div>
+
+<!-- User Profile & Dropdown -->
+<div class="relative">
+
+    <!-- Botón del perfil -->
+    <button
+        type="button"
+        id="profileButton"
+        class="flex items-center gap-3 pl-1 group active:scale-95 transition-transform duration-150"
+    >
+        <div class="relative">
+            <img
+                alt="Avatar de usuario de PixelCritic"
+                class="w-9 h-9 rounded border border-outline-variant/50 object-cover group-hover:border-primary transition-colors"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrpO5qj3y4pX8-hcRjTP6QZL2aPxj2xoyFjScIX_vx_T8VrPXnP6WX7BndupgOFNADl8oQoD6InRyhq0175qsBJb4Aeio5O3SVY5f30cEPkNsoV6pGn9KolPvAejmkM2j768CtFSiLKdpotc16nKr8aW9A5sKgU4i377-PH4bk5fAT-CXv6Dw11D9_jbHbAp0y3guGkSv67apPg-f9paGYDLF8ucRr59BxmMNuPgd3OgjVb3sWJBSj"
+            >
+            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-tertiary rounded-full ring-2 ring-surface-container-low"></span>
+        </div>
+
+        <div class="hidden lg:flex flex-col text-left">
+            <span class="text-label-md font-label-md text-on-surface group-hover:text-primary transition-colors">
+                {{ request.user.username }}
+            </span>
+            <span class="text-body-sm font-body-sm text-outline">
+                {{ request.user.email }}
+            </span>
+        </div>
+
+        <span class="material-symbols-outlined text-outline text-lg">
+            expand_more
+        </span>
+    </button>
+
+    <!-- Profile Dropdown -->
+    <div
+        id="profileDropdown"
+        class="hidden absolute right-0 top-full mt-2 w-56
+               rounded-xl border border-outline-variant/40
+               bg-surface-container-low shadow-2xl z-[100]
+               overflow-hidden"
+    >
+        <div class="px-4 py-3 border-b border-outline-variant/20">
+            <p class="text-sm font-semibold text-on-surface">
+                {{ request.user.username }}
+            </p>
+            <p class="text-xs text-on-surface-variant truncate">
+                {{ request.user.email }}
+            </p>
+        </div>
+
+        <div class="p-1.5">
+
+            <a href="#"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
+                <span class="material-symbols-outlined text-lg">person</span>
+                Mi perfil
+            </a>
+
+            <a href="#"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container-high hover:text-primary">
+                <span class="material-symbols-outlined text-lg">settings</span>
+                Configuración
+            </a>
+
+            <div class="my-1 border-t border-outline-variant/20"></div>
+
+            <form method="post" action="{% url 'cerrar_sesion' %}">
+                {% csrf_token %}
+                <button
+                    type="submit"
+                    class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-400 hover:bg-red-500/10 transition-colors text-left"
+                >
+                    <span class="material-symbols-outlined text-lg">logout</span>
+                    Cerrar sesión
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+</a>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+<!-- Header & User Stats Overview Section -->
+<section class="space-y-6">
+<!-- Title & CTA Bar -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2">
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-container/20 text-primary border border-primary/30">
+              Perfil Crítico • Verificado
+            </span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">Mis Reseñas</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">
+            Gestiona, edita y consulta el historial de tus análisis y valoraciones de videojuegos.
+          </p>
+</div>
+
+</div>
+<!-- Compact Summary Stats Strip (Bento Strip) -->
+<div class="gap-3 lg:gap-4 flex">
+<!-- Stat 1 -->
+<div class="bg-surface-container p-4 rounded border border-outline-variant/30 flex items-center gap-3.5 hover:border-outline-variant/60 transition-colors">
+<div class="w-11 h-11 rounded bg-surface-container-high flex items-center justify-center text-primary shrink-0 border border-outline-variant/20">
+<span class="material-symbols-outlined text-2xl" data-icon="rate_review">rate_review</span>
+</div>
+<div>
+<span class="text-headline-md font-headline-md text-on-surface leading-none font-bold">
+    {{ total_resenas }}
+</span>
+<p class="text-body-sm font-body-sm text-outline mt-0.5">Reseñas Publicadas</p>
+</div>
+</div>
+<!-- Stat 2 -->
+
+<!-- Stat 3 -->
+
+<!-- Stat 4 -->
+
+</div>
+</section>
+<!-- Filter and Controls Bar -->
+<section class="bg-surface-container-low p-4 rounded border border-outline-variant/30 space-y-4"><div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4"><div class="relative w-full sm:w-64"><span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-base pointer-events-none" data-icon="filter_alt">filter_alt</span><input class="w-full h-8 pl-8 pr-3 rounded bg-surface-container border border-outline-variant/30 text-on-surface placeholder:text-outline text-body-sm font-body-sm focus:outline-none focus:border-primary transition-colors" placeholder="Filtrar por título..." type="text"></div><div class="flex items-center gap-2 self-end sm:self-auto"><label class="text-body-sm font-body-sm text-outline hidden sm:inline" for="sort-select">Ordenar:</label><div class="relative"><select class="h-8 pl-3 pr-8 rounded bg-surface-container border border-outline-variant/30 text-on-surface text-label-md font-label-md appearance-none focus:outline-none focus:border-primary cursor-pointer" id="sort-select"><option selected="">Más recientes</option><option>Mayor puntuación</option><option>Más votadas</option></select><span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline text-base pointer-events-none" data-icon="expand_more">expand_more</span></div></div></div></section>
+<!-- Reviews List Section -->
+
+<!-- Reviews List Section -->
+<section class="space-y-4">
+
+    {% for resena in resenas %}
+
+    <article class="bg-surface-container p-5 md:p-6 rounded border border-outline-variant/30 hover:border-outline-variant/60 transition-all duration-200 group">
+
+        <div class="flex flex-col md:flex-row gap-5 items-start">
+
+            <!-- Carátula del videojuego -->
+            <div class="relative w-full md:w-36 h-48 md:h-44 shrink-0 rounded overflow-hidden border border-outline-variant/30 bg-surface-container-high">
+
+                {% if resena.juego.caratula %}
+                    <img
+                        src="{{ resena.juego.caratula.url }}"
+                        alt="{{ resena.juego.titulo }}"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    >
+                {% else %}
+                    <div class="w-full h-full flex flex-col items-center justify-center text-outline gap-2">
+                        <span class="material-symbols-outlined text-4xl">videogame_asset</span>
+                        <span class="text-xs">Sin carátula</span>
+                    </div>
+                {% endif %}
+
+                <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-surface-container-lowest/90 backdrop-blur text-label-md font-label-md text-on-surface border border-outline-variant/40">
+                    {{ resena.juego.plataforma }}
+                </span>
+
+            </div>
+
+            <!-- Información de la reseña -->
+            <div class="flex-1 w-full space-y-3">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+
+                            <h2 class="text-headline-sm font-headline-sm text-on-surface group-hover:text-primary transition-colors">
+                                {{ resena.juego.titulo }}
+                            </h2>
+
+                            <span class="text-body-sm font-body-sm text-outline">
+                                • {{ resena.juego.anio_lanzamiento }}
+                            </span>
+
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-body-sm font-body-sm text-on-surface-variant">
+
+                            <span>
+                                Publicada:
+                                <strong class="text-on-surface font-medium">
+                                    {{ resena.fecha_creacion|date:"d M Y" }}
+                                </strong>
+                            </span>
+
+                            {% if resena.fecha_actualizacion != resena.fecha_creacion %}
+                                <span class="text-outline">
+                                    • Editada
+                                </span>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <!-- Calificación -->
+                    {% if resena.calificacion %}
+                    <div class="shrink-0 flex flex-col items-center">
+
+                        <div class="w-12 h-12 rounded-lg bg-surface-container-high border-2 border-outline-variant/40 flex items-center justify-center text-on-surface font-label-score-lg text-lg">
+                            {{ resena.calificacion }}/5
+                        </div>
+
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-outline mt-1">
+                            {% if resena.calificacion == 5 %}
+                                Excelente
+                            {% elif resena.calificacion == 4 %}
+                                Muy buena
+                            {% elif resena.calificacion == 3 %}
+                                Buena
+                            {% elif resena.calificacion == 2 %}
+                                Regular
+                            {% else %}
+                                Deficiente
+                            {% endif %}
+                        </span>
+
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                <!-- Contenido -->
+                <p class="text-body-md font-body-md text-on-surface-variant leading-relaxed whitespace-pre-line">
+                    {{ resena.contenido }}
+                </p>
+
+                <!-- Acciones -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-end gap-3 pt-3 border-t border-outline-variant/20">
+
+                    <div class="flex items-center gap-2 self-end sm:self-auto">
+
+                        <!-- Ver ficha -->
+                        <a
+                            href="{% url 'detalle_juego' resena.juego.id %}"
+                            class="px-3 py-1.5 rounded text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1"
+                        >
+                            <span class="material-symbols-outlined text-base">visibility</span>
+                            Ver Ficha
+                        </a>
+
+                        <!-- Editar reseña -->
+                        <a
+                            href="{% url 'editar_resena' resena.id %}"
+                            class="px-3 py-1.5 rounded text-label-md font-label-md bg-surface-container-high border border-outline-variant/30 text-on-surface hover:border-primary hover:text-primary transition-colors flex items-center gap-1 active:scale-95 duration-150"
+                        >
+                            <span class="material-symbols-outlined text-base">edit</span>
+                            Editar Reseña
+                        </a>
+
+                        <!-- Eliminar reseña -->
+                        <form
+                            method="POST"
+                            action="{% url 'eliminar_resena' resena.id %}"
+                            onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta reseña?');"
+                        >
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                aria-label="Eliminar reseña"
+                                title="Eliminar reseña"
+                                class="p-1.5 rounded text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors active:scale-95 duration-150"
+                            >
+                                <span class="material-symbols-outlined text-lg">delete</span>
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </article>
+
+    {% empty %}
+
+    <!-- Estado vacío -->
+    <div class="bg-surface-container p-10 rounded border border-outline-variant/30 text-center">
+
+        <span class="material-symbols-outlined text-5xl text-outline mb-3">
+            rate_review
+        </span>
+
+        <h2 class="text-headline-md font-headline-md text-on-surface mb-2">
+            Todavía no tienes reseñas
+        </h2>
+
+        <p class="text-body-md text-on-surface-variant mb-5">
+            Explora el catálogo y comparte tu opinión sobre tus videojuegos favoritos.
+        </p>
+
+        <a
+            href="{% url 'lista_juegos' %}"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary-container text-on-primary-container font-semibold hover:opacity-90 transition-all"
+        >
+            <span class="material-symbols-outlined">sports_esports</span>
+            Explorar catálogo
+        </a>
+
+    </div>
+
+    {% endfor %}
+
+</section>
+
+<!-- Pagination Controls -->
+
+</main>
+<!-- Footer (Shared Component: Footer) -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest full-width bottom border-t border-outline-variant/20 dark:border-outline-variant/20 mt-16">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-6 max-w-7xl mx-auto gap-4">
+<!-- Brand & Copyright -->
+<div class="flex flex-col sm:flex-row items-center gap-3">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-on-surface tracking-tight">PixelCritic</span>
+<span class="hidden sm:inline text-outline">•</span>
+<p class="text-body-sm font-body-sm text-outline">
+          © 2024 PixelCritic. Todos los derechos reservados.
+        </p>
+</div>
+<!-- Footer Navigation Links -->
+<div class="flex flex-wrap items-center justify-center gap-6">
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md hover:text-primary dark:hover:text-primary transition-colors duration-150" href="#">
+          Términos y Privacidad
+        </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md hover:text-primary dark:hover:text-primary transition-colors duration-150" href="#">
+          Pautas Editoriales
+        </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md hover:text-primary dark:hover:text-primary transition-colors duration-150" href="#">
+          Metodología de Puntuación
+        </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md hover:text-primary dark:hover:text-primary transition-colors duration-150" href="#">
+          Contacto
+        </a>
+</div>
+</div>
+</footer>
+
+<script>
+    const profileButton = document.getElementById("profileButton");
+    const profileDropdown = document.getElementById("profileDropdown");
+
+    profileButton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        profileDropdown.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", function (event) {
+        if (
+            !profileButton.contains(event.target) &&
+            !profileDropdown.contains(event.target)
+        ) {
+            profileDropdown.classList.add("hidden");
+        }
+    });
+</script>
+</body></html>

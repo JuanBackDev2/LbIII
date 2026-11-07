@@ -287,3 +287,19 @@ def eliminar_resena(request, resena_id):
         "detalle_juego",
         juego_id=juego_id
     )
+
+@login_required
+def mis_resenas(request):
+    resenas = (
+        Resena.objects
+        .filter(usuario=request.user)
+        .select_related("juego")
+        .order_by("-fecha_creacion")
+    )
+
+    total_resenas = resenas.count()
+
+    return render(request, "mis_resenas.html", {
+        "resenas": resenas,
+        "total_resenas": total_resenas,
+    })
