@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Resena
+from .models import Juego, Resena
 
 
 class ResenaForm(forms.ModelForm):
@@ -54,7 +54,34 @@ class ResenaForm(forms.ModelForm):
         
 
 
+class JuegoForm(forms.ModelForm):
+    class Meta:
+        model = Juego
+        fields = [
+            "titulo",
+            "descripcion",
+            "plataforma",
+            "anio_lanzamiento",
+            "caratula",
+        ]
 
-
-
-
+        widgets = {
+            "titulo": forms.TextInput(attrs={
+                "class": "w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface",
+                "placeholder": "Nombre del videojuego",
+            }),
+            "descripcion": forms.Textarea(attrs={
+                "class": "w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface",
+                "rows": 4,
+            }),
+            "plataforma": forms.Select(attrs={
+                "class": "w-full md:w-80 bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface",
+            }),
+            "anio_lanzamiento": forms.NumberInput(attrs={
+                "class": "w-full md:w-48 bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface",
+            }),
+            "caratula": forms.ClearableFileInput(attrs={
+                "class": "text-on-surface",
+                "accept": "image/*",
+            }),
+        }

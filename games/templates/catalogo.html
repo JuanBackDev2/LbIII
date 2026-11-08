@@ -216,10 +216,12 @@
                         Mis Reseñas
                     </a>
 
-                    <a class="text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-primary"
-                       href="/admin/">
-                        Panel Admin
-                    </a>
+                    {% if request.user.is_staff %}
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-primary dark:hover:text-primary duration-150 active:scale-95 transition-transform duration-150"
+   href="{% url 'agregar_juego' %}">
+    Panel Admin
+</a>
+{% endif %}
 
                 </nav>
 

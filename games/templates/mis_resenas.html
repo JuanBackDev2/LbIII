@@ -148,9 +148,12 @@
 <a class="border-b-2 border-primary text-primary dark:text-primary pb-1 font-label-lg text-label-lg active:scale-95 transition-transform duration-150 flex items-center gap-1.5" href="#">
             Mis Reseñas
           </a>
-<a class="text-on-surface-variant dark:text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-primary dark:hover:text-primary duration-150 active:scale-95 transition-transform" href="#">
-            Panel Admin
-          </a>
+{% if request.user.is_staff %}
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-lg text-label-lg transition-colors hover:text-primary dark:hover:text-primary duration-150 active:scale-95 transition-transform duration-150"
+   href="{% url 'agregar_juego' %}">
+    Panel Admin
+</a>
+{% endif %}
 </nav>
 </div>
 <!-- Right Controls: Search, Actions, Profile -->
@@ -467,7 +470,7 @@
         </p>
 
         <a
-            href="{% url 'lista_juegos' %}"
+            href="{% url 'catalogo' %}"
             class="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary-container text-on-primary-container font-semibold hover:opacity-90 transition-all"
         >
             <span class="material-symbols-outlined">sports_esports</span>

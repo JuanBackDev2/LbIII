@@ -20,6 +20,7 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
 User = get_user_model()
 from django.views.decorators.http import require_POST
+from django.db.models import Avg
 
 """
 class RegistroAPIView(generics.CreateAPIView):
@@ -162,6 +163,17 @@ def detalle_juego(request, juego_id):
 
         ya_reseno = mi_resena is not None
 
+    promedio = Resena.objects.filter(
+    juego=juego,
+    calificacion__isnull=False
+    ).aggregate(promedio=Avg("calificacion"))["promedio"]
+
+    porcentaje_jugabilidad = (
+    (promedio / 5) * 100
+    if promedio is not None
+    else 0
+)
+
     return render(
         request,
         "detalle_juego.html",
@@ -170,6 +182,8 @@ def detalle_juego(request, juego_id):
             "resenas": resenas,
             "ya_reseno": ya_reseno,
             "mi_resena": mi_resena,
+            "promedio": promedio,
+            "porcentaje_jugabilidad": porcentaje_jugabilidad,
         },
     )
 
@@ -302,4 +316,32 @@ def mis_resenas(request):
     return render(request, "mis_resenas.html", {
         "resenas": resenas,
         "total_resenas": total_resenas,
+    })
+
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from .forms import JuegoForm
+from .models import Juego
+
+
+@staff_member_required
+def agregar_juego(request):
+
+    if request.method == "POST":
+        form = JuegoForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "El videojuego se agregó correctamente.")
+            return redirect("agregar_juego")
+
+    else:
+        form = JuegoForm()
+
+    juegos = Juego.objects.all().order_by("-id")
+
+    return render(request, "paneladmin.html", {
+        "form": form,
+        "juegos": juegos,
     })
